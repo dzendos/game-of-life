@@ -1,0 +1,87 @@
+openapi: 3.0.3
+info:
+  title: Game Of Life API
+  version: '1.0.0'
+  description: |
+    The game of life api that allows you to compute the next state of some population.
+
+    ### Check out its features:
+
+    * Send the state of the game to evaluate 🧬
+    * Send query to change number of replicas 📈
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+
+tags:
+  - name: Logic
+    description: Everything for game logic
+  - name: Configuration
+    description: API for server configuration
+
+paths:
+  /evaluateNextGeneration:
+    post:
+      tags: 
+        - Logic
+        
+      summary: Evaluates next generation
+      description: By given map evaluates next generation in game of life.
+      operationId: nextGen
+      requestBody:
+        description: Evaluate next generation
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Map'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Map' 
+        '500':
+          description: Internal server error
+  /setReplicasNumber:
+    put:
+      tags:
+        - Configuration
+
+      summary: Changes number of replicas
+      description: By the given number from 1 to 100, sets the given number of replicas on the server.
+      requestBody:
+        description: Asks to change the number of replicas
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReplicasNumber' 
+        required: true
+      responses:
+        '200':
+          description: 'Ok'
+        '500':
+          description: Internal server error
+
+
+components:
+  schemas:
+    Map:
+      type: array
+      items:
+        type: object
+        properties:
+          rowIndex: 
+            type: integer
+            example: 3
+          columnIndex:
+            type: integer
+            example: 5
+          isAlive:
+            type: boolean
+            example: true
+
+    ReplicasNumber:
+      type: integer
+      example: 10
