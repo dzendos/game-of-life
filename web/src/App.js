@@ -199,6 +199,7 @@ function App() {
                 tooltip="off"
                 bsPrefix="slider"
                 min={1}
+                max={10}
                 style={{ backgroundColor: "white" }}
               />
               <p className="slider__text">{value2}</p>
