@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  labels: # (optional) arbitrary keys and corresponding values to label the deployment
+    app: app
+spec:
+  replicas: 3
+  selector: # the selector used by ReplicaSet to find the deployment pods, must match pod template labels
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels: # sets labels for all pods created by this deployment.
+        app: app
+    spec:
+      containers:
+        - name: app
+          image: dzendos/game-of-life:2.0.11
+          ports:
+            - containerPort: 8080 # port exposed by the app image
